@@ -1,28 +1,46 @@
+'use client'
+
+import { useState } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import QuizContainer from './components/QuizContainer'
 
 export default function Home() {
+  const [showQuiz, setShowQuiz] = useState(false)
+
   return (
     <main className="min-h-screen bg-[#FFFAF6] flex flex-col">
       <Header />
+
       <section className="flex-1 flex items-center justify-center px-6 py-12">
-        <div className="text-center max-w-3xl space-y-8">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-[#1F1F1F] leading-tight">
-            Construis une marque <span className="text-[#E19882]">alignée</span>, <span className="text-[#9BC4A7]">inspirante</span><br /> et mémorable
-          </h1>
+        {!showQuiz ? (
+          <div className="text-center max-w-2xl space-y-6">
+            <h1 className="text-5xl md:text-6xl font-extrabold text-[#1F1F1F] leading-tight">
+              Ta marque mérite <span className="text-[#E19882]">plus qu’un logo</span>
+            </h1>
 
-          <p className="text-lg text-[#4A4A4A] max-w-xl mx-auto">
-            IdentityFlow est un outil guidé qui t’aide à révéler ton identité de marque en quelques minutes : storytelling, positionnement et univers visuel <br></br> tout est fluide, intuitif, et soutenu par l’IA.
-          </p>
+            <p className="text-lg text-[#4A4A4A]">
+              Découvre ton univers de marque en 5 minutes : storytelling, ton, positionnement. C’est guidé, fluide, et magique ✨
+            </p>
 
-          <a
-            href="/quiz"
-            className="inline-block bg-[#E19882] hover:bg-[#CC7A68] text-white font-semibold px-8 py-4 rounded-xl shadow-lg transition-all"
-          >
-            ✨ Commencer le quiz
-          </a>
-        </div>
+            <button
+              onClick={() => setShowQuiz(true)}
+              className="bg-[#E19882] hover:bg-[#CC7A68] text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-transform"
+            >
+              🎯 Commencer le quiz
+            </button>
+
+            <p className="text-sm text-[#999999]">
+              +120 entrepreneuses ont déjà transformé leur image avec IdentityFlow
+            </p>
+          </div>
+        ) : (
+          <div className="w-full max-w-xl">
+            <QuizContainer />
+          </div>
+        )}
       </section>
+
       <Footer />
     </main>
   )
