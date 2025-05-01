@@ -3,11 +3,12 @@
 import { useState } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import QuizContainer from './components/QuizContainer'
+import QuizPage from './QuizPage'
+import ResultPage from './ResultPage'
 
 export default function Home() {
   const [showQuiz, setShowQuiz] = useState(false)
-
+  const [showResult, setShowResult] = useState(false)
   return (
     <main className="min-h-screen bg-[#FFFAF6] flex flex-col">
       <Header />
@@ -34,9 +35,13 @@ export default function Home() {
               +120 entrepreneuses ont déjà transformé leur image avec IdentityFlow
             </p>
           </div>
+        ) : showResult ? (
+          <div className="w-full max-w-3xl">
+            <ResultPage />
+          </div>
         ) : (
           <div className="w-full max-w-xl">
-            <QuizContainer />
+            <QuizPage onFinish={() => setShowResult(true)} />
           </div>
         )}
       </section>
