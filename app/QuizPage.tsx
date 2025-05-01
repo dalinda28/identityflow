@@ -11,7 +11,7 @@ type QuizProps = {
 export default function QuizPage({ onFinish, onAnswersCollected }: QuizProps) {
     const [step, setStep] = useState(0)
     const [answers, setAnswers] = useState<string[]>([])
-    const totalSteps = questions.length
+    const totalSteps = questions.length + 1
     const subtexts = [
         "Fais ton choix instinctivement 💡",
         "Laisse parler ton intuition ✨",
@@ -23,34 +23,43 @@ export default function QuizPage({ onFinish, onAnswersCollected }: QuizProps) {
     const [isFinished, setIsFinished] = useState(false)
     const [result, setResult] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
-    const handleAnswer = async (answer: string) => {
+
+    const [brandName, setBrandName] = useState('')
+    const [activity, setActivity] = useState('')
+    const [idealClient, setIdealClient] = useState('')
+    const [baseColor, setBaseColor] = useState('')
+
+    const handleAnswer = (answer: string) => {
         const newAnswers = [...answers, answer]
         setAnswers(newAnswers)
 
-        if (step < totalSteps - 1) {
+        if (step < questions.length) {
             setStep(step + 1)
-        } else {
-            setIsFinished(true)
-            localStorage.setItem('quizAnswers', JSON.stringify(newAnswers))
-            setLoading(true)
-            try {
-                const res = await fetch('/api/generate-brand', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ answers: newAnswers })
-                })
-                const data = await res.json()
-                localStorage.setItem('quizResult', data.result)
-                setResult(data.result)
-            } catch (error) {
-                console.error("Erreur lors de la génération IA :", error)
-            } finally {
-                setLoading(false)
-            }
-            onAnswersCollected?.(newAnswers)
-            onFinish?.()
         }
     }
+
+    const handleSubmitAll = async () => {
+        const finalAnswers = [...answers, brandName, activity, idealClient, baseColor];
+        localStorage.setItem('quizAnswers', JSON.stringify(finalAnswers));
+        setLoading(true);
+        try {
+            const res = await fetch('/api/generate-brand', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ answers: finalAnswers })
+            });
+            const data = await res.json();
+            localStorage.setItem('quizResult', data.result);
+            setResult(data.result);
+            setIsFinished(true);
+        } catch (error) {
+            console.error("Erreur lors de la génération IA :", error);
+        } finally {
+            setLoading(false);
+        }
+        onAnswersCollected?.(finalAnswers);
+        onFinish?.();
+    };
 
     const current = questions[step]
 
@@ -61,7 +70,7 @@ export default function QuizPage({ onFinish, onAnswersCollected }: QuizProps) {
               Étape {step + 1} sur {totalSteps}
             </p>
 
-            {!isFinished && (
+            {!isFinished && step < questions.length && (
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={step}
@@ -92,7 +101,67 @@ export default function QuizPage({ onFinish, onAnswersCollected }: QuizProps) {
                     </motion.div>
                 </AnimatePresence>
             )}
-            {isFinished && (
+            {step === questions.length && !result && (
+              <div className="space-y-6">
+                <h3 className="text-lg font-semibold text-[#2C2C2C]">Parlons maintenant de ton activité</h3>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">As-tu déjà un nom de marque ?</label>
+                  <input
+                    type="text"
+                    value={brandName}
+                    onChange={(e) => setBrandName(e.target.value)}
+                    maxLength={100}
+                    placeholder="Exemple : Lumina Studio, pas encore, en réflexion..."
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Quelle est ton activité ou ton domaine principal ?</label>
+                  <input
+                    type="text"
+                    value={activity}
+                    onChange={(e) => setActivity(e.target.value)}
+                    maxLength={150}
+                    placeholder="Exemple : make-up artist, thérapeute holistique, coaching business…"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Décris ta cliente idéale en quelques mots</label>
+                  <input
+                    type="text"
+                    value={idealClient}
+                    onChange={(e) => setIdealClient(e.target.value)}
+                    maxLength={200}
+                    placeholder="Exemple : femme ambitieuse, hypersensible, 25-45 ans, en quête d’alignement…"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Souhaites-tu partir d’une couleur précise ? (facultatif)</label>
+                  <input
+                    type="text"
+                    value={baseColor}
+                    onChange={(e) => setBaseColor(e.target.value)}
+                    maxLength={40}
+                    placeholder="Exemple : terracotta, #FFB6C1, rose poudré..."
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm"
+                  />
+                </div>
+
+                <button
+                  onClick={handleSubmitAll}
+                  className="mt-6 w-full py-3 px-6 bg-[#E19882] text-white rounded-md font-semibold hover:bg-[#d47b70] transition"
+                >
+                  Générer mon profil
+                </button>
+              </div>
+            )}
+            {isFinished && result && (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
