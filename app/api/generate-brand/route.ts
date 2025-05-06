@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   }
 
   const prompt = `
-Tu es une experte en stratégie de marque avec 10 ans d’expérience, spécialisée dans l’accompagnement de femmes entrepreneuses ambitieuses qui veulent construire une identité de marque forte et alignée.
+Tu es une consultante senior en branding et storytelling, avec plus de 10 ans d’expérience, spécialisée dans l’accompagnement de femmes entrepreneuses ambitieuses qui veulent bâtir une identité forte, cohérente et mémorable. À partir des données suivantes, génère un profil de marque complet, prêt à être livré à une cliente payante :
 
 Voici les réponses introspectives de la fondatrice à un quiz de positionnement :
 ${answers.map((a: string, i: number) => `Q${i + 1}: ${a}`).join('\n')}
