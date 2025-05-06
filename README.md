@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IdentityFlow
 
-## Getting Started
+**IdentityFlow** est une application web Next.js qui permet aux femmes entrepreneuses de créer une identité de marque forte, cohérente et personnalisée grâce à l’intelligence artificielle.
 
-First, run the development server:
+## 🚀 Fonctionnalités
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Quiz interactif** : Questions guidées pour cerner les valeurs, la vision et la personnalité de la fondatrice.
+- **Blocs d’activité** : Nom de marque, secteur, cliente idéale et couleur d’ancrage pour un profil sur-mesure.
+- **Génération IA** : Storytelling, ton de voix, citation signature, palette de couleurs experte, hashtags et suggestion de nom.
+- **Téléchargement PDF** : Export du profil complet au format PDF via html2pdf.js.
+- **Interface moderne** : Next.js 15, Tailwind CSS, animations Framer Motion.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework** : Next.js 15 (App Router)
+- **Langage** : TypeScript & React
+- **Styles** : Tailwind CSS
+- **Animations** : Framer Motion
+- **API IA** : OpenAI (GPT-3.5-Turbo)
+- **Export PDF** : html2pdf.js
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📥 Installation
 
-## Learn More
+1. Clone le dépôt :
+   ```bash
+   git clone https://github.com/dalinda28/identityflow.git
+   cd identityflow
+   ```
+2. Installe les dépendances :
+   ```bash
+   npm install
+   ```
+3. Crée un fichier `.env.local` à la racine avec ta clé OpenAI :
+   ```
+   OPENAI_API_KEY=ta_cle_api_openai
+   ```
+4. Lance le serveur de développement :
+   ```bash
+   npm run dev
+   ```
+5. Ouvre [http://localhost:3000](http://localhost:3000) dans ton navigateur.
 
-To learn more about Next.js, take a look at the following resources:
+## ⚙️ Configuration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **OPENAI_API_KEY** : Clé secrète pour accéder à l’API OpenAI.
+- **allowedDevOrigins** (optionnel) : Configure `next.config.js` si tu utilises un hôte externe pour le dev (Cross-Origin).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Déploiement
 
-## Deploy on Vercel
+- Déployez sur Vercel pour bénéficier du support Next.js.
+- Ajoutez la variable `OPENAI_API_KEY` dans les Environment Variables de Vercel.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📚 Ressources
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [OpenAI API Reference](https://platform.openai.com/docs)
+- [Framer Motion](https://www.framer.com/motion/)
+
+---
+
+© 2025 IdentityFlow — Créé avec ❤️ par Dalinda  
